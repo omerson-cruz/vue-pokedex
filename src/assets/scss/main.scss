@@ -1,0 +1,129 @@
+@import "~bulma/sass/utilities/_all";
+
+// Set your colors
+$primary: #8c67ef;
+$primary-light: findLightColor($primary);
+$primary-dark: findDarkColor($primary);
+$primary-invert: findColorInvert($primary);
+$twitter: #4099ff;
+$twitter-invert: findColorInvert($twitter);
+// POKEDEX COLORS  #ff3838;
+$red: #ff4f4f;
+$red-light: findLightColor($red);
+$red-dark: findDarkColor($red);
+$red-invert: findColorInvert($red);
+
+$grey: #383838;
+$grey-light: findLightColor($grey);
+$grey-dark: findDarkColor($grey);
+$grey-invert: findColorInvert($grey);
+
+// Lists and maps
+$custom-colors: null !default;
+$custom-shades: null !default;
+
+// Setup $colors to use as bulma classes (e.g. 'is-twitter')
+$colors: mergeColorMaps(
+  (
+    "white": (
+      $white,
+      $black,
+    ),
+    "black": (
+      $black,
+      $white,
+    ),
+    "light": (
+      $light,
+      $light-invert,
+    ),
+    "dark": (
+      $dark,
+      $dark-invert,
+    ),
+    "primary": (
+      $primary,
+      $primary-invert,
+      $primary-light,
+      $primary-dark,
+    ),
+    "link": (
+      $link,
+      $link-invert,
+      $link-light,
+      $link-dark,
+    ),
+    "info": (
+      $info,
+      $info-invert,
+      $info-light,
+      $info-dark,
+    ),
+    "success": (
+      $success,
+      $success-invert,
+      $success-light,
+      $success-dark,
+    ),
+    "warning": (
+      $warning,
+      $warning-invert,
+      $warning-light,
+      $warning-dark,
+    ),
+    "danger": (
+      $danger,
+      $danger-invert,
+      $danger-light,
+      $danger-dark,
+    ),
+    "red": (
+      $red,
+      $red-invert,
+      $red-light,
+      $red-dark,
+    ),
+    "grey": (
+      $grey,
+      $grey-invert,
+      $grey-light,
+      $grey-dark,
+    ),
+  ),
+  $custom-colors
+);
+
+// Links
+$link: $primary;
+$link-invert: $primary-invert;
+$link-focus-border: $primary;
+
+// Import Bulma and Buefy styles
+@import "~bulma";
+@import "~buefy/src/scss/buefy";
+
+// for testing
+.bordered {
+  border: 2px solid yellow;
+}
+
+.main-container {
+  min-height: 100vh;
+  // background: linear-gradient(
+  //   90deg,
+  //   rgba(80, 74, 74, 0.562),
+  //   rgba(48, 43, 43, 0.884),
+  //   url("https://static.vecteezy.com/system/resources/previews/000/580/584/non_2x/vector-abstract-geometric-white-and-gray-diagonal-stripes-lines-modern-background.jpg")
+  // );
+  background: linear-gradient(
+      90deg,
+      rgba(201, 192, 192, 0.178),
+      rgba(48, 43, 43, 0.575)
+    ),
+    url("https://static.vecteezy.com/system/resources/previews/000/580/584/non_2x/vector-abstract-geometric-white-and-gray-diagonal-stripes-lines-modern-background.jpg");
+
+  background-blend-mode: multiply;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}

@@ -1,12 +1,19 @@
-import Vue from 'vue'
-import App from './App.vue'
-import router from './router'
-import store from './store'
+import Vue from "vue";
+import App from "./App.vue";
+import router from "./router";
+import store from "./store";
+import Buefy from "buefy";
+import vuetify from './plugins/vuetify';
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
+
+Vue.use(Buefy, {
+  defaultIconPack: "fas",
+});
 
 new Vue({
   router,
   store,
-  render: h => h(App)
-}).$mount('#app')
+  vuetify,
+  render: (h) => h(App)
+}).$mount("#app");
