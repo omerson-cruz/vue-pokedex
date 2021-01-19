@@ -1,9 +1,6 @@
 module.exports = {
-  "configureWebpack": {
-    "devtool": "#source-map"
+  configureWebpack: {
+    devtool: "#source-map",
   },
-  "lintOnSave": false,
-  "transpileDependencies": [
-    "vuetify"
-  ]
-}
+  lintOnSave: false,
+};

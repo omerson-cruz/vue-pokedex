@@ -18,6 +18,11 @@ $grey-light: findLightColor($grey);
 $grey-dark: findDarkColor($grey);
 $grey-invert: findColorInvert($grey);
 
+$greywhite: #cdd7d854;
+$greywhite-light: findLightColor($greywhite);
+$greywhite-dark: findDarkColor($greywhite);
+$greywhite-invert: findColorInvert($greywhite);
+
 // Lists and maps
 $custom-colors: null !default;
 $custom-shades: null !default;
@@ -89,6 +94,12 @@ $colors: mergeColorMaps(
       $grey-light,
       $grey-dark,
     ),
+    "greywhite": (
+      $greywhite,
+      $greywhite-invert,
+      $greywhite-light,
+      $greywhite-dark,
+    ),
   ),
   $custom-colors
 );
@@ -128,5 +139,17 @@ $link-focus-border: $primary;
   background-size: cover;
 }
 
-// Active Pagination ref: vuetify plugin API
-$pagination-disabled-opacity: 0.8 !default;
+// Pagination
+.page-text {
+  color: rgb(59, 30, 30);
+  font-size: large;
+}
+
+.active-page {
+  width: 55px;
+  height: 55px;
+  background-color: #46444469;
+  li > a {
+    color: rgba(201, 192, 192, 0.178) !important;
+  }
+}
