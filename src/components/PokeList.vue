@@ -2,7 +2,6 @@
     <div>
     <!-- LOADING SKELETON LIST -->
         <skeleton-list></skeleton-list>
-
     <!-- END - SKELETON LIST -->
 
 
@@ -14,40 +13,19 @@
 
 
     <!-- PAGINATION -->
-        <!-- <section>
 
-            <div class="columns is-justify-content-center mb-2">
-                <div class="column">
-
-                </div>
-                <div class="column is-7">
-                <b-pagination
-                :total="total"
-                v-model="current"
-                :range-before="rangeBefore"
-                :range-after="rangeAfter"
-                :order="order"
-                :size="size"
-                :simple="isSimple"
-                :rounded="isRounded"
-                :per-page="perPage"
-                :icon-prev="prevIcon"
-                :icon-next="nextIcon"
-                aria-next-label="Next page"
-                aria-previous-label="Previous page"
-                aria-page-label="Page"
-                aria-current-label="Current page">
-            </b-pagination>
-                </div>
-            </div>
-
-        </section> -->
 
     <!-- PAGINATION -->
-        <section>
-            <pagination>
+        <section class="has-text-weight-medium">
+            <v-pagination
+                v-model="page"
+                :length="length"
+                prev-icon="fa-arrow-alt-circle-left"
+                next-icon="fa-arrow-alt-circle-right"
 
-            </pagination>
+            >
+
+            </v-pagination>
 
         </section>
         <!-- <section>
@@ -63,14 +41,21 @@ import {VPagination} from "vuetify/lib"
 export default {
     components: {
         skeletonList: SkeletonList,
-        pagination: VPagination
+        vPagination: VPagination
     },
 
     data() {
         return {
-
+            length: 55,
+            page: 1
         }
     },
+
+    watch: {
+        page(value) {
+            console.log("current page: ", this.page)
+        }
+    }
 }
 </script>
 

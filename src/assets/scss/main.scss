@@ -127,3 +127,6 @@ $link-focus-border: $primary;
   background-position: center;
   background-size: cover;
 }
+
+// Active Pagination ref: vuetify plugin API
+$pagination-disabled-opacity: 0.8 !default;
