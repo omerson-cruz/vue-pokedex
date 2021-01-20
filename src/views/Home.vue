@@ -1,6 +1,6 @@
 <template>
     <div class="container list-container">
-        <poke-list></poke-list>
+        <poke-list :page="page"></poke-list>
     </div>
 </template>
 
@@ -22,7 +22,17 @@ export default {
 
     created(){
         console.log(this.$route.path)
-        // if (this.$route.path) return
+        if (this.$route.path === "/") {
+            this.page = 1
+        } else {
+            console.log("this.route.path: ", this.$route)
+            this.page = +this.$route.params.id
+        }
+    },
+
+    updated() {
+        console.log("Home Updated: ", this.$route)
+        this.page = +this.$route.params.id
     }
 }
 </script>

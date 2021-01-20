@@ -19,7 +19,7 @@ export default new Vuex.Store({
   ],
 
   state: {
-    isLoadingData: false,
+    isLoadingData: true,
     hasNoData: false,
     totalCount: 0,
     nextPage: null,

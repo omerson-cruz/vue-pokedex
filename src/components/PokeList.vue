@@ -1,5 +1,7 @@
 <template>
     <div>
+        <!-- PAGE -->
+
     <!-- LOADING SKELETON LIST -->
         <template v-if="isLoading">
             <transition name="fade" mode="out-in">
@@ -44,14 +46,16 @@
                     :next-link-class="'pagination-next'"
                     :active-class="'active-page'"
                     :active-link-class="'has-text-light'"
+                    :force-page="currentPage"
                     :initial-page="page"
                 >
                 </paginate>
             </div>
         </section>
-        <!-- <section>
+        <div>
+            current Page number: {{ currentPage }}
+        </div>
 
-        </section> -->
     </div>
 </template>
 
@@ -73,18 +77,31 @@ export default {
         notFound: PokeNotFound
     },
 
-    // props: {
-    //     page: {
-    //         default: 1,
-    //         type: Number
-    //     }
-    // },
+    props: {
+        page: {
+            type: Number
+        }
+    },
 
     data() {
         return {
-            page: 1,
+            currentPage: this.page,
             pageSize: 20,
         }
+    },
+
+    created() {
+        console.log('pokelist created')
+    },
+
+    updated() {
+        console.log('pokelist Updated')
+
+        if(this.$route.params.id) { // if :id exists. Dont just use "this.$route.params" for checking becaause it will always be true because $route.params is always an empty object
+            // console.log(this.$route)
+            this.currentPage = +this.$route.params.id
+        }
+
     },
 
     methods: {
@@ -92,12 +109,11 @@ export default {
 
         clickPage(pageNum) {
             console.log('pageNum: ', pageNum)
-            // this.page = pageNum  // ==> should not modify prop from child
+            this.currentPage = pageNum  // ==> should not modify prop from child
             const offset = this.computeOffsetPage(pageNum, this.pageSize)
             console.log('offset: ', offset)
             console.log('limit: ', this.pageSize)
-            // this.$router
-            // this.$store.dispatch('setPageOffset', offset)
+            this.$router.push(`/page/${pageNum}`)
         }
     },
 
@@ -113,7 +129,7 @@ export default {
             console.log('total pages: ', TotalNoOfPages)
 
             return TotalNoOfPages
-        }
+        },
     },
 
     watch: {
@@ -125,6 +141,18 @@ export default {
         },
         nextPage() {
             console.log("nextPage changed: ", this.nextPage)
+        },
+        //==> this will ensure that this.currentPage will be updated every time we click the pagination
+        // or when we change route
+        // ==> There is a caveat tho because if we try to refresh the page and stays on the same URL route
+        // then the this.currentPage will go back to value = "1" so will not be in-sync
+
+        // == In order to update this.currentPage when refreshed then we need to use "update()" method
+        '$route'(to, from) {
+            console.log("to: ", to)
+            console.log("from: ", from)
+            if(to.params.id)
+                this.currentPage = +to.params.id
         }
     }
 }
