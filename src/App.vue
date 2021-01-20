@@ -31,7 +31,7 @@ export default {
   },
 
   async created() {
-    console.log('app created: ', this.$store.getters.isLoadingData)
+    // console.log('app created: ', this.$store.getters.isLoadingData)
     console.log(`
       set isLoadingData to TRUE
       GET pokemon count

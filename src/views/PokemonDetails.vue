@@ -193,9 +193,9 @@ export default {
             pokemonIndex: "currentPokemonIndex",
         }),
         pokemon(){
-            console.log('this pokemon index', this.pokemonIndex)
-            console.log('this pokemon list', this.pokemonList)
-            console.log('this pokemon list', this.pokemonList[this.pokemonIndex])
+            // console.log('this pokemon index', this.pokemonIndex)
+            // console.log('this pokemon list', this.pokemonList)
+            // console.log('this pokemon list', this.pokemonList[this.pokemonIndex])
 
             return this.pokemonList[this.pokemonIndex]
         }
@@ -212,13 +212,13 @@ export default {
 
     methods: {
         goToPreviousPage(){
-            console.log('clicked')
+            // console.log('clicked')
             this.$router.go(-1)
         }
     },
 
     created() {
-        console.log('pokemon page created')
+        // console.log('pokemon page created')
 
     },
 

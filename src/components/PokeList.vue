@@ -82,9 +82,9 @@ export default {
     },
 
     created() {
-        console.log('pokelist created')
+        // console.log('pokelist created')
         this.$store.commit('setLoading', true)
-        console.log('router', this.$route.params.id)
+        // console.log('router', this.$route.params.id)
 
         if(this.$route.params.id) {
             const offset = this.computeOffsetPage(this.$route.params.id, this.pageSize)
@@ -93,21 +93,21 @@ export default {
                 offset,
                 limit: this.pageSize
             }
-            console.log('payload: ', payload)
+            // console.log('payload: ', payload)
             this.$store.dispatch('loadPokemonList', payload)
         } else {
             const payload = {
                 offset: 0,
                 limit: this.pageSize
             }
-            console.log('payload: ', payload)
+            // console.log('payload: ', payload)
             this.$store.dispatch('loadPokemonList', payload)
         }
 
     },
 
     updated() {
-        console.log('pokelist Updated')
+        // console.log('pokelist Updated')
 
         if(this.$route.params.id) { // if :id exists. Dont just use "this.$route.params" for checking becaause it will always be true because $route.params is always an empty object
             // console.log(this.$route)
@@ -122,11 +122,11 @@ export default {
         computeOffsetPage,
 
         clickPage(pageNum) {
-            console.log('pageNum: ', pageNum)
+            // console.log('pageNum: ', pageNum)
             this.currentPage = pageNum  // ==> should not modify prop from child
             const offset = this.computeOffsetPage(pageNum, this.pageSize)
-            console.log('offset: ', offset)
-            console.log('limit: ', this.pageSize)
+            // console.log('offset: ', offset)
+            // console.log('limit: ', this.pageSize)
             const payload = {
                 offset,
                 limit: this.pageSize
@@ -146,7 +146,7 @@ export default {
         }),
         pageCount() {  // DO not to use ARROW function in computed or you will not be able to use "this" keyword
             const TotalNoOfPages = Math.ceil(this.$store.getters.totalCount / this.pageSize)
-            console.log('total pages: ', TotalNoOfPages)
+            // console.log('total pages: ', TotalNoOfPages)
 
             return TotalNoOfPages
         },
@@ -154,13 +154,13 @@ export default {
 
     watch: {
         page(value) {
-            console.log("current page: ", this.page)
+            // console.log("current page: ", this.page)
         },
         prevPage() {
-            console.log("prevPage changed: ", this.prevPage)
+            // console.log("prevPage changed: ", this.prevPage)
         },
         nextPage() {
-            console.log("nextPage changed: ", this.nextPage)
+            // console.log("nextPage changed: ", this.nextPage)
         },
         //==> this will ensure that this.currentPage will be updated every time we click the pagination
         // or when we change route
@@ -169,8 +169,8 @@ export default {
 
         // == In order to update this.currentPage when refreshed then we need to use "update()" method
         '$route'(to, from) {
-            console.log("to: ", to)
-            console.log("from: ", from)
+            // console.log("to: ", to)
+            // console.log("from: ", from)
             if(to.params.id) {
                 this.currentPage = +to.params.id
             }

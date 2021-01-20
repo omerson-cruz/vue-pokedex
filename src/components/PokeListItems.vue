@@ -73,7 +73,7 @@ export default {
 
     methods: {
         handleImageClick(pokemonName, store_index) {
-            console.log("image was clicked")
+            // console.log("image was clicked")
             const payload = {
                 store_index,
                 pokemonName
@@ -85,7 +85,7 @@ export default {
 
     watch: {
         pokemonList(value){
-            console.log('pokemon List changed: ', value)
+            // console.log('pokemon List changed: ', value)
         }
     }
 

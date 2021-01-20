@@ -55,7 +55,7 @@ export default new Vuex.Store({
       state.pageOffset = payload;
     },
     setCurrentPokemonIndex: (state, payload) => {
-      console.log("setting current index");
+      // console.log("setting current index");
       state.currentStoreIndex = payload;
     },
   },
@@ -65,17 +65,17 @@ export default new Vuex.Store({
       // default first page
       payload = { offset: state.pageOffset, limit: state.pageLimit }
     ) => {
-      console.log("loading Data");
+      // console.log("loading Data");
       commit("setLoading", true);
 
-      console.log("Fetch Pokemon payload: ", payload);
+      // console.log("Fetch Pokemon payload: ", payload);
 
       let urlString = `/pokemon?offset=${payload.offset}&limit=${payload.limit}`;
 
       try {
         const res = await globalAxios.get(urlString);
         if (res.status === 200 && res.data) {
-          console.log("response: ", res.data);
+          // console.log("response: ", res.data);
           const {
             data: { next, previous, count, results },
           } = res;
@@ -101,7 +101,7 @@ export default new Vuex.Store({
     },
 
     getPokemonDetails({ commit }, payload) {
-      console.log("getPokemonDetails", payload);
+      // console.log("getPokemonDetails", payload);
       let promiseArray = [];
 
       // promiseArray = payload.map((pokemon, index) => {
@@ -119,7 +119,7 @@ export default new Vuex.Store({
       });
 
       Promise.all(promiseArray).then((values) => {
-        console.log("Pokemon List Collections: ", values);
+        // console.log("Pokemon List Collections: ", values);
         commit("setPokemonList", values);
 
         commit("setLoading", false);
@@ -128,20 +128,20 @@ export default new Vuex.Store({
     },
     setPageOffset: ({ commit, dispatch, state }, payload) => {
       commit("setPageOffset", payload);
-      console.log("loadPokemonlist, ");
+      // console.log("loadPokemonlist, ");
 
       let arg = {
         offset: payload,
         limit: state.pageLimit,
       };
 
-      console.log("arg: ", arg);
+      // console.log("arg: ", arg);
 
       dispatch("loadPokemonList", arg);
     },
 
     setCurrentPokemonIndex: ({ commit }, payload) => {
-      console.log("setCurrentPokemonIndex", payload);
+      // console.log("setCurrentPokemonIndex", payload);
 
       commit("setCurrentPokemonIndex", payload.store_index);
       router.push(`/pokemon/${payload.pokemonName}`);
@@ -149,7 +149,7 @@ export default new Vuex.Store({
 
     searchPokemon: async ({ commit, dispatch }, payload) => {
       commit("setCurrentPokemonIndex", 0);
-      console.log("searchPokemon");
+      // console.log("searchPokemon");
 
       const pokemonName = "" + payload.toLowerCase();
 
@@ -158,7 +158,7 @@ export default new Vuex.Store({
       try {
         const res = await globalAxios.get(urlString);
         if (res.status === 200 && res.data) {
-          console.log("response: ", res.data);
+          // console.log("response: ", res.data);
           const {
             data: { id, name },
           } = res;
@@ -168,7 +168,7 @@ export default new Vuex.Store({
            * data.previous
            * data.results
            */
-          console.log("success search", id, name);
+          // console.log("success search", id, name);
 
           const dummyString = "//////" + id + "/";
           let pokemon = {
@@ -178,11 +178,11 @@ export default new Vuex.Store({
 
           const fetchOnePokemon = fetchPokemonDataPromise(pokemon, 0);
           fetchOnePokemon.then((data) => {
-            console.log("fetch result data: ", data);
+            // console.log("fetch result data: ", data);
 
             const dummyArray = [data];
 
-            console.log("Pokemon List Collections: ", dummyArray);
+            // console.log("Pokemon List Collections: ", dummyArray);
             commit("setPokemonList", dummyArray);
 
             commit("setLoading", false);
@@ -190,13 +190,13 @@ export default new Vuex.Store({
             router.push("/pokemon/" + pokemon.name);
           });
 
-          console.log("fetchResult", fetchOnePokemon);
+          // console.log("fetchResult", fetchOnePokemon);
         } else {
           throw new Error("Failed to fetch the data from server");
         }
       } catch (err) {
         console.error(err);
-        console.log("catch block error");
+        // console.log("catch block error");
         commit("setLoading", false);
         commit("setHasNoData", true);
         router.push("/NotFound");

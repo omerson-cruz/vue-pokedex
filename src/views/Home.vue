@@ -21,24 +21,24 @@ export default {
     },
 
     created(){
-        console.log(this.$route.path)
+        // console.log(this.$route.path)
         if (this.$route.path === "/") {
             this.page = 1
         } else {
-            console.log("this.route.path: ", this.$route)
+            // console.log("this.route.path: ", this.$route)
             this.page = +this.$route.params.id
         }
     },
 
     updated() {
-        console.log("Home Updated: ", this.$route)
+        // console.log("Home Updated: ", this.$route)
         this.page = +this.$route.params.id
     },
 
     watch: {
         '$route'(to, from) {
-            console.log("watching from Home to: ", to)
-            console.log("watching from:Home from ", from)
+            // console.log("watching from Home to: ", to)
+            // console.log("watching from:Home from ", from)
             if (to.path != from.path){
                 // this.$store.dispatch('loadPokemonList')
             }
