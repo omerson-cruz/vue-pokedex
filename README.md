@@ -3,7 +3,7 @@
 ### Follow Below instructions for building this projec on Local Server
 
 To see output without building on local pls. visit GitHub Page:
-###
+### https://omerson-cruz.github.io/vue-pokedex/
 
 ## Project setup
 ```

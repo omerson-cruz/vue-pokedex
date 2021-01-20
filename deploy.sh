@@ -1,24 +1,26 @@
-#!/usr/bin/env sh
-# abort on errors
-set -e
+#!/usr/bin/env sh
 
-# build
-npm run build
+# abort on errors
+set -e
 
-# navigate into the build output directory
-cd dist
+# build
+npm run build
 
-# if you are deploying to a custom domain
-# echo 'www.example.com' > CNAME
-git init
-git add -A
-git commit -m 'deploy'
+# navigate into the build output directory
+cd dist
 
-# if you are deploying to https://<USERNAME>.github.io
-# git push -f git@github.com:<USERNAME>/<USERNAME>.github.io.git master
-# if you are deploying to https://<USERNAME>.github.io/<REPO>
-# git push -f git@github.com:<USERNAME>/<REPO>.git master:gh-pages
+# if you are deploying to a custom domain
+# echo 'www.example.com' > CNAME
 
-git push -f git@github.com:omerson-cruz/vue-pokedex.git master:gh-pages
+git init
+git add -A
+git commit -m 'deploy'
 
-cd -
+# if you are deploying to https://<USERNAME>.github.io
+# git push -f git@github.com:<USERNAME>/<USERNAME>.github.io.git master
+
+# if you are deploying to https://<USERNAME>.github.io/<REPO>
+# git push -f git@github.com:<USERNAME>/<REPO>.git master:gh-pages
+git push -f git@github.com:omerson-cruz/vue-pokedex.git master:gh-pages
+
+cd -
