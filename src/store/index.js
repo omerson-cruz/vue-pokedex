@@ -206,7 +206,7 @@ export default new Vuex.Store({
                   // console.log(
                   //   "pokeData after species extraction: ",
                   //   data.evolution_id
-                  // );
+                  // )
                   globalAxios
                     .get("/evolution-chain/" + data.evolution_id)
                     .then(({ data: { chain } }) => {
