@@ -1,6 +1,6 @@
 <template>
     <div class="container list-container">
-        <poke-list :page="page"></poke-list>
+        <poke-list></poke-list>
     </div>
 </template>
 
@@ -12,7 +12,7 @@ export default {
 
     data() {
         return {
-            page: 1
+            page: 1,
         }
     },
 
@@ -21,7 +21,8 @@ export default {
     },
 
     created(){
-
+        console.log(this.$route.path)
+        // if (this.$route.path) return
     }
 }
 </script>

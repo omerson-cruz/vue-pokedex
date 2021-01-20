@@ -63,6 +63,8 @@ export default new Vuex.Store({
       console.log("loading Data");
       commit("setLoading", true);
 
+      console.log("payload: ", payload);
+
       try {
         const res = await globalAxios.get("/pokemon", {
           params: {
@@ -125,8 +127,18 @@ export default new Vuex.Store({
         commit("setHasNoData", false);
       });
     },
-    setPageOffset: ({ commit, dispatch }, payload) => {
+    setPageOffset: ({ commit, dispatch, state }, payload) => {
       commit("setPageOffset", payload);
+      console.log("loadPokemonlist, ");
+
+      let arg = {
+        offset: payload,
+        limit: state.pageLimit,
+      };
+
+      console.log("arg: ", arg);
+
+      dispatch("loadPokemonList", arg);
     },
   },
   getters: {

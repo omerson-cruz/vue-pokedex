@@ -73,15 +73,16 @@ export default {
         notFound: PokeNotFound
     },
 
-    props: {
-        page: {
-            default: 1,
-            type: Number
-        }
-    },
+    // props: {
+    //     page: {
+    //         default: 1,
+    //         type: Number
+    //     }
+    // },
 
     data() {
         return {
+            page: 1,
             pageSize: 20,
         }
     },
@@ -91,11 +92,12 @@ export default {
 
         clickPage(pageNum) {
             console.log('pageNum: ', pageNum)
-            page = pageNum
+            // this.page = pageNum  // ==> should not modify prop from child
             const offset = this.computeOffsetPage(pageNum, this.pageSize)
             console.log('offset: ', offset)
             console.log('limit: ', this.pageSize)
             // this.$router
+            // this.$store.dispatch('setPageOffset', offset)
         }
     },
 

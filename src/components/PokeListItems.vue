@@ -9,10 +9,14 @@
                 >
                     <figure class="media is-justify-content-center"> <!-- .media is a flex -->
                         <p class="image is-150x150"> <!-- Both size of this and size of skeleton below should match -->
-                            <img :src="pokemon.imageUrl" alt="Placeholder image"
+                            <!-- <img :src="pokemon.imageUrl" alt="Pokemon image"
 
-                            style="width: 200px"
-                            >
+                                style="width: 200px"
+                            > -->
+                            <b-image
+                                :src="pokemon.imageUrl"
+                                :src-fallback="'https://toppng.com/uploads/preview/pokeball-11530983183h69cddzgqu.png'"
+                            ></b-image>
                         </p>
                     </figure>
                 </div>
@@ -75,7 +79,7 @@ export default {
 
     watch: {
         pokemonList(value){
-            console.log('pokemon List: ', value)
+            console.log('pokemon List changed: ', value)
         }
     }
 
