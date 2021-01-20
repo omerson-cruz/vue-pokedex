@@ -1,6 +1,26 @@
 <template>
     <div>
-        <!-- PAGE -->
+    <!-- PAGINATION -->
+        <section class="has-text-weight-bold columns mb-0 mt-4">
+            <div class="column is-6-tablet is-offset-3-tablet  is-12-mobile"
+                v-if="!hasNoData"
+            >
+                <paginate
+                    :pageCount="pageCount"
+                    :containerClass="'pagination is-centered is-rounded'"
+                    :clickHandler="clickPage"
+                    :page-class="'pagination-link'"
+                    :page-link-class="'page-text'"
+                    :prev-link-class="'pagination-previous'"
+                    :next-link-class="'pagination-next'"
+                    :active-class="'active-page'"
+                    :active-link-class="'has-text-light'"
+                    :force-page="currentPage"
+                    :initial-page="page"
+                >
+                </paginate>
+            </div>
+        </section>
 
     <!-- LOADING SKELETON LIST -->
         <template v-if="isLoading">
@@ -26,35 +46,6 @@
 
 
     <!-- END - ACTUAL POKE-LIST ITEMS -->
-
-
-    <!-- PAGINATION -->
-
-
-    <!-- PAGINATION -->
-        <section class="has-text-weight-bold columns mb-4 hastextli">
-            <div class="column is-6-tablet is-offset-3-tablet  is-12-mobile"
-                v-if="!hasNoData"
-            >
-                <paginate
-                    :pageCount="pageCount"
-                    :containerClass="'pagination is-centered is-rounded'"
-                    :clickHandler="clickPage"
-                    :page-class="'pagination-link'"
-                    :page-link-class="'page-text'"
-                    :prev-link-class="'pagination-previous'"
-                    :next-link-class="'pagination-next'"
-                    :active-class="'active-page'"
-                    :active-link-class="'has-text-light'"
-                    :force-page="currentPage"
-                    :initial-page="page"
-                >
-                </paginate>
-            </div>
-        </section>
-        <div>
-            current Page number: {{ currentPage }}
-        </div>
 
     </div>
 </template>
@@ -92,6 +83,27 @@ export default {
 
     created() {
         console.log('pokelist created')
+        this.$store.commit('setLoading', true)
+        console.log('router', this.$route.params.id)
+
+        if(this.$route.params.id) {
+            const offset = this.computeOffsetPage(this.$route.params.id, this.pageSize)
+
+            const payload = {
+                offset,
+                limit: this.pageSize
+            }
+            console.log('payload: ', payload)
+            this.$store.dispatch('loadPokemonList', payload)
+        } else {
+            const payload = {
+                offset: 0,
+                limit: this.pageSize
+            }
+            console.log('payload: ', payload)
+            this.$store.dispatch('loadPokemonList', payload)
+        }
+
     },
 
     updated() {
@@ -101,6 +113,8 @@ export default {
             // console.log(this.$route)
             this.currentPage = +this.$route.params.id
         }
+
+
 
     },
 
@@ -113,6 +127,12 @@ export default {
             const offset = this.computeOffsetPage(pageNum, this.pageSize)
             console.log('offset: ', offset)
             console.log('limit: ', this.pageSize)
+            const payload = {
+                offset,
+                limit: this.pageSize
+            }
+            this.$store.commit('setLoading', true)
+            this.$store.dispatch('loadPokemonList', payload)
             this.$router.push(`/page/${pageNum}`)
         }
     },
@@ -151,8 +171,9 @@ export default {
         '$route'(to, from) {
             console.log("to: ", to)
             console.log("from: ", from)
-            if(to.params.id)
+            if(to.params.id) {
                 this.currentPage = +to.params.id
+            }
         }
     }
 }
@@ -178,7 +199,7 @@ export default {
     }
     .fade-leave-active {
         transition: opacity .65s;
-        opacity: 1; // <-- have to set to 1 so that skeleton will be displayed longer
+        opacity: 0; // <-- have to set to 1 so that skeleton will be displayed longer
     }
 
 

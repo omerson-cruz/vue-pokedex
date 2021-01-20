@@ -33,6 +33,16 @@ export default {
     updated() {
         console.log("Home Updated: ", this.$route)
         this.page = +this.$route.params.id
+    },
+
+    watch: {
+        '$route'(to, from) {
+            console.log("watching from Home to: ", to)
+            console.log("watching from:Home from ", from)
+            if (to.path != from.path){
+                // this.$store.dispatch('loadPokemonList')
+            }
+        }
     }
 }
 </script>

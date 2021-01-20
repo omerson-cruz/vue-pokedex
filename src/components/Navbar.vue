@@ -19,17 +19,7 @@
         <template #start>
             <b-navbar-item >
                 <router-link
-                    to="/"
-                    tag="a"
-                    exact
-                    class="router-link"
-                >
-                   Home
-                </router-link>
-            </b-navbar-item>
-            <b-navbar-item >
-                <router-link
-                    to="/"
+                    to="/about"
                     tag="a"
                     exact
                     class="router-link"
@@ -37,6 +27,7 @@
                    About
                 </router-link>
             </b-navbar-item>
+
 
             <b-navbar-item class="search-container is-12" tag="div">
                 <b-input
@@ -48,6 +39,9 @@
                     icon-right="close-circle"
                     icon-right-clickable
                     @icon-right-click="clearIconClick"
+                    v-model="searchTerm"
+                    @keyup.native="handleKeyUp"
+
                     >
                 </b-input>
             </b-navbar-item>
@@ -94,16 +88,39 @@
   </div>
 </template>
 <script>
+
+
+
 export default {
     name: 'Navbar',
 
+    data() {
+        return {
+            searchTerm: '',
+        }
+    },
     methods: {
+        dispatchSearchPokemon() {
+            const payload = this.searchTerm
+            this.searchTerm = ""
+            this.$store.dispatch('searchPokemon', payload)
+        },
         searchIconClick() {
+            this.dispatchSearchPokemon()
+        },
+        enterKeyHandler(){
 
         },
         clearIconClick() {
-
+            this.searchTerm = ""
+        },
+        handleKeyUp(event) {
+            // Check if ENTER key pressed
+            if (event.keyCode === 13) {
+                this.dispatchSearchPokemon()
+            }
         }
+
     }
 
 

@@ -27,6 +27,7 @@ export default new Vuex.Store({
 
     pokemonList: [], //==> will contain the pokemon list items
     pokemonIndividual: {}, //=> will contain details for single pokemon
+    currentStoreIndex: 0,
 
     pageOffset: 0,
     pageLimit: 20,
@@ -53,6 +54,10 @@ export default new Vuex.Store({
     setPageOffset: (state, payload) => {
       state.pageOffset = payload;
     },
+    setCurrentPokemonIndex: (state, payload) => {
+      console.log("setting current index");
+      state.currentStoreIndex = payload;
+    },
   },
   actions: {
     loadPokemonList: async (
@@ -63,18 +68,12 @@ export default new Vuex.Store({
       console.log("loading Data");
       commit("setLoading", true);
 
-      console.log("payload: ", payload);
+      console.log("Fetch Pokemon payload: ", payload);
+
+      let urlString = `/pokemon?offset=${payload.offset}&limit=${payload.limit}`;
 
       try {
-        const res = await globalAxios.get("/pokemon", {
-          params: {
-            offset: payload.offset,
-            limit: payload.limit,
-            // offset: payload.offset,
-            // limit: payload.limit,
-          },
-        });
-
+        const res = await globalAxios.get(urlString);
         if (res.status === 200 && res.data) {
           console.log("response: ", res.data);
           const {
@@ -140,6 +139,72 @@ export default new Vuex.Store({
 
       dispatch("loadPokemonList", arg);
     },
+
+    setCurrentPokemonIndex: ({ commit }, payload) => {
+      console.log("setCurrentPokemonIndex", payload);
+
+      commit("setCurrentPokemonIndex", payload.store_index);
+      router.push(`/pokemon/${payload.pokemonName}`);
+    },
+
+    searchPokemon: async ({ commit, dispatch }, payload) => {
+      commit("setCurrentPokemonIndex", 0);
+      console.log("searchPokemon");
+
+      const pokemonName = "" + payload.toLowerCase();
+
+      let urlString = "/pokemon/" + pokemonName;
+
+      try {
+        const res = await globalAxios.get(urlString);
+        if (res.status === 200 && res.data) {
+          console.log("response: ", res.data);
+          const {
+            data: { id, name },
+          } = res;
+          /**
+           * data.count
+           * data.next
+           * data.previous
+           * data.results
+           */
+          console.log("success search", id, name);
+
+          const dummyString = "//////" + id + "/";
+          let pokemon = {
+            name: name,
+            url: dummyString,
+          };
+
+          const fetchOnePokemon = fetchPokemonDataPromise(pokemon, 0);
+          fetchOnePokemon.then((data) => {
+            console.log("fetch result data: ", data);
+
+            const dummyArray = [data];
+
+            console.log("Pokemon List Collections: ", dummyArray);
+            commit("setPokemonList", dummyArray);
+
+            commit("setLoading", false);
+            commit("setHasNoData", false);
+            router.push("/pokemon/" + pokemon.name);
+          });
+
+          console.log("fetchResult", fetchOnePokemon);
+        } else {
+          throw new Error("Failed to fetch the data from server");
+        }
+      } catch (err) {
+        console.error(err);
+        console.log("catch block error");
+        commit("setLoading", false);
+        commit("setHasNoData", true);
+        router.push("/NotFound");
+        return; //== need to return to AVOID executing the commits below
+      }
+
+      // const fetchPokemon = fetchPokemonDataPromise()
+    },
   },
   getters: {
     isLoadingData: (state) => state.isLoadingData,
@@ -149,6 +214,7 @@ export default new Vuex.Store({
     prevPage: (state) => state.prevPage,
     pokemonList: (state) => state.pokemonList,
     pageOffset: (state) => state.pageOffset,
+    currentPokemonIndex: (state) => state.currentStoreIndex,
   },
 
   modules: {},

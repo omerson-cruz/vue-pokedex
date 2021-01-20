@@ -3,11 +3,11 @@
         <div class="column is-3-desktop is-12-mobile"
             v-for="(pokemon) in pokemonList" :key="pokemon.id"
         >
-            <div class="card">
+            <div class="card pokemon-card" @click="handleImageClick(pokemon.name, pokemon.store_id)">
                 <div class="card-image py-3 has-background-greywhite"
-                    @click="handleImageClick"
+
                 >
-                    <figure class="media is-justify-content-center"> <!-- .media is a flex -->
+                    <figure class="media is-justify-content-center" > <!-- .media is a flex -->
                         <p class="image is-150x150"> <!-- Both size of this and size of skeleton below should match -->
                             <!-- <img :src="pokemon.imageUrl" alt="Pokemon image"
 
@@ -23,7 +23,7 @@
             <!--  INFO SUMMARY -->
                <div class="card-content pt-0 ">
                    <div class="content mt-1 has-text-info is-size-4">
-                       <span>{{pokemon.id | formatId}}</span>
+                       <span >{{pokemon.id | formatId}}</span>
                    </div>
 
                     <div class="is-size-3 has-text-weight-semibold has-text-info-dark mb-4">
@@ -72,8 +72,14 @@ export default {
     },
 
     methods: {
-        handleImageClick() {
+        handleImageClick(pokemonName, store_index) {
             console.log("image was clicked")
+            const payload = {
+                store_index,
+                pokemonName
+            }
+
+            this.$store.dispatch('setCurrentPokemonIndex', payload)
         }
     },
 
@@ -87,5 +93,29 @@ export default {
 </script>
 
 <style scoped>
+.pokemon-card:hover {
+    cursor: pointer;
+    animation-name: bounce;
+    animation-duration: 1s;
+    animation-fill-mode: both;
+    animation-timing-function: ease-in-out;
+}
 
+@keyframes bounce {
+	0%, 100%, 20%, 50%, 80% {
+		-webkit-transform: translateY(0);
+		-ms-transform:     translateY(0);
+		transform:         translateY(0)
+	}
+	40% {
+		-webkit-transform: translateY(-30px);
+		-ms-transform:     translateY(-30px);
+		transform:         translateY(-30px)
+	}
+	60% {
+		-webkit-transform: translateY(-15px);
+		-ms-transform:     translateY(-15px);
+		transform:         translateY(-15px)
+	}
+}
 </style>,

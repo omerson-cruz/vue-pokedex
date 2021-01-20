@@ -11,7 +11,7 @@ Vue.use(Buefy, {
   defaultIconPack: "fas",
 });
 
-Vue.config.devtools = false; // Disable Vue Devtools
+Vue.config.devtools = true; // Disable Vue Devtools
 
 new Vue({
   router,

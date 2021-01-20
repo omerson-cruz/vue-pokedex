@@ -1,12 +1,43 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
+import PokemonDetails from "../views/PokemonDetails.vue";
 
 const Page = (resolve) => {
   require.ensure(
     ["../views/Home.vue"],
     () => {
       resolve(require("../views/Home.vue"));
+    },
+    "user" // [[ 16 - 26 @06:00 ]] we can also group them into one bundle by having the argv2 like this 'user' group bundle
+  );
+};
+
+const PokeDetails = (resolve) => {
+  require.ensure(
+    ["../views/PokemonDetails.vue"],
+    () => {
+      resolve(require("../views/PokemonDetails.vue"));
+    },
+    "user" // [[ 16 - 26 @06:00 ]] we can also group them into one bundle by having the argv2 like this 'user' group bundle
+  );
+};
+
+const ErrorPage = (resolve) => {
+  require.ensure(
+    ["../components/PokeNotFound.vue"],
+    () => {
+      resolve(require("../components/PokeNotFound.vue"));
+    },
+    "user" // [[ 16 - 26 @06:00 ]] we can also group them into one bundle by having the argv2 like this 'user' group bundle
+  );
+};
+
+const AboutPage = (resolve) => {
+  require.ensure(
+    ["../components/About.vue"],
+    () => {
+      resolve(require("../components/About.vue"));
     },
     "user" // [[ 16 - 26 @06:00 ]] we can also group them into one bundle by having the argv2 like this 'user' group bundle
   );
@@ -33,6 +64,21 @@ const routes = [
     path: "/page/:id",
     name: "Page",
     component: Page,
+  },
+  {
+    path: "/pokemon/:name",
+    name: "PokemonPage",
+    component: PokeDetails,
+  },
+  {
+    path: "/NotFound",
+    name: "ErrorPage",
+    component: ErrorPage,
+  },
+  {
+    path: "/about",
+    name: "About",
+    component: AboutPage,
   },
 ];
 

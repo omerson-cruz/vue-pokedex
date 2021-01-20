@@ -41,6 +41,7 @@ export const fetchPokemonDataPromise = (pokemon, store_index) => {
     };
     pokeData.name = pokemon.name;
     pokeData.id = getPokemonIdFromUrl(pokemon.url);
+
     resolve(pokeData);
   }).then((pokeData) => {
     globalAxios
@@ -149,6 +150,7 @@ export const fetchPokemonDataPromise = (pokemon, store_index) => {
                 ...pokeData.strengths.no_damage_from,
                 ...damage_relations.no_damage_from,
               ];
+
               // TYPE WEAKNESSES...
               pokeData.weaknesses.double_damage_from = [
                 ...pokeData.weaknesses.double_damage_from,
