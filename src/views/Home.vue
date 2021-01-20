@@ -18,6 +18,10 @@ export default {
 
     components: {
         pokeList: Pokelist
+    },
+
+    created(){
+
     }
 }
 </script>

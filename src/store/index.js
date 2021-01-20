@@ -125,6 +125,9 @@ export default new Vuex.Store({
         commit("setHasNoData", false);
       });
     },
+    setPageOffset: ({ commit, dispatch }, payload) => {
+      commit("setPageOffset", payload);
+    },
   },
   getters: {
     isLoadingData: (state) => state.isLoadingData,

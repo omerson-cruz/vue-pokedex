@@ -44,6 +44,7 @@
                     :next-link-class="'pagination-next'"
                     :active-class="'active-page'"
                     :active-link-class="'has-text-light'"
+                    :initial-page="page"
                 >
                 </paginate>
             </div>
@@ -90,9 +91,11 @@ export default {
 
         clickPage(pageNum) {
             console.log('pageNum: ', pageNum)
+            page = pageNum
             const offset = this.computeOffsetPage(pageNum, this.pageSize)
             console.log('offset: ', offset)
             console.log('limit: ', this.pageSize)
+            // this.$router
         }
     },
 
@@ -138,14 +141,14 @@ export default {
     }
     .fade-enter-active {
         /* here is where we setup the real transition */
-        transition: opacity .7s;
+        transition: opacity .3s;
     }
     .fade-leave {
         /* opacity: 1  <-- since it is the default state so no need to put opacity: 1 */
     }
     .fade-leave-active {
-        transition: opacity .5s;
-        opacity: 0;
+        transition: opacity .65s;
+        opacity: 1; // <-- have to set to 1 so that skeleton will be displayed longer
     }
 
 
