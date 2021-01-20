@@ -26,6 +26,10 @@ export default new Vuex.Store({
     prevPage: null,
 
     pokemonList: [], //==> will contain the pokemon list items
+    pokemonIndividual: {}, //=> will contain details for single pokemon
+
+    pageOffset: 0,
+    pageLimit: 20,
   },
   mutations: {
     setLoading: (state, payload) => {
@@ -46,12 +50,15 @@ export default new Vuex.Store({
     setPokemonList: (state, payload) => {
       state.pokemonList = payload;
     },
+    setPageOffset: (state, payload) => {
+      state.pageOffset = payload;
+    },
   },
   actions: {
     loadPokemonList: async (
-      { commit, dispatch },
+      { commit, dispatch, state },
       // default first page
-      payload = { offset: 0, limit: 20 }
+      payload = { offset: state.pageOffset, limit: state.pageLimit }
     ) => {
       console.log("loading Data");
       commit("setLoading", true);
@@ -61,6 +68,8 @@ export default new Vuex.Store({
           params: {
             offset: payload.offset,
             limit: payload.limit,
+            // offset: payload.offset,
+            // limit: payload.limit,
           },
         });
 
@@ -88,9 +97,6 @@ export default new Vuex.Store({
         commit("setHasNoData", true);
         return; //== need to return to AVOID executing the commits below
       }
-
-      commit("setLoading", false);
-      commit("setHasNoData", false);
     },
 
     getPokemonDetails({ commit }, payload) {
@@ -113,6 +119,10 @@ export default new Vuex.Store({
 
       Promise.all(promiseArray).then((values) => {
         console.log("Pokemon List Collections: ", values);
+        commit("setPokemonList", values);
+
+        commit("setLoading", false);
+        commit("setHasNoData", false);
       });
     },
   },
@@ -122,6 +132,8 @@ export default new Vuex.Store({
     totalCount: (state) => state.totalCount,
     nextPage: (state) => state.nextPage,
     prevPage: (state) => state.prevPage,
+    pokemonList: (state) => state.pokemonList,
+    pageOffset: (state) => state.pageOffset,
   },
 
   modules: {},

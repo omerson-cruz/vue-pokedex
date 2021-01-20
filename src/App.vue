@@ -2,7 +2,11 @@
   <div>
     <nav-bar></nav-bar>
     <div class="main-container">
-      <router-view></router-view>
+      <div class="columns">
+        <div class="column is-10 is-offset-1 column-container">
+          <router-view></router-view>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -45,6 +49,27 @@ export default {
 </script>
 
 <style lang="scss">
-@import "./assets/scss/main.scss"
+@import "./assets/scss/main.scss";
+
+
+.column-container {
+    min-height: 100vh;
+    background: radial-gradient(
+      rgba(219, 190, 190, 0.562),
+      rgba(255, 255, 255, 0.884)
+    );
+  background-blend-mode: multiply;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.list-container {
+    width: 85%;
+    margin-top: -3px;
+    min-height: 100vh;
+    background-color: whitesmoke;
+    border: 2px solid rgba(187, 182, 182, 0.719)
+}
 
 </style>

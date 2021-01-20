@@ -2,7 +2,9 @@
     <div>
     <!-- LOADING SKELETON LIST -->
         <template v-if="isLoading">
-            <skeleton-list></skeleton-list>
+            <transition name="fade" mode="out-in">
+                <skeleton-list></skeleton-list>
+            </transition>
         </template>
     <!-- END - SKELETON LIST -->
 
@@ -13,7 +15,10 @@
             </template>
 
             <template v-else>
-                <poke-list-items></poke-list-items>
+                <transition name="fade" mode="out-in">
+                    <poke-list-items></poke-list-items>
+                </transition>
+
             </template>
         </template>
 
@@ -67,10 +72,16 @@ export default {
         notFound: PokeNotFound
     },
 
+    props: {
+        page: {
+            default: 1,
+            type: Number
+        }
+    },
+
     data() {
         return {
             pageSize: 20,
-            page: 1,
         }
     },
 
@@ -83,7 +94,6 @@ export default {
             console.log('offset: ', offset)
             console.log('limit: ', this.pageSize)
         }
-
     },
 
     computed: {
@@ -119,5 +129,24 @@ export default {
 .error-container {
     min-height: 80vh;
 }
+
+    /* For FADE we are using the "TRANSITION" Property to do animation */
+
+    .fade-enter {
+        /* here we will set our inital state */
+        opacity: 0
+    }
+    .fade-enter-active {
+        /* here is where we setup the real transition */
+        transition: opacity .7s;
+    }
+    .fade-leave {
+        /* opacity: 1  <-- since it is the default state so no need to put opacity: 1 */
+    }
+    .fade-leave-active {
+        transition: opacity .5s;
+        opacity: 0;
+    }
+
 
 </style>,
