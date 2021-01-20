@@ -31,7 +31,6 @@
             >
                 <paginate
                     :pageCount="pageCount"
-                    :force-page="page"
                     :containerClass="'pagination is-centered is-rounded'"
                     :clickHandler="clickPage"
                     :page-class="'pagination-link'"
@@ -58,6 +57,8 @@ import PokeNotFound from "../components/PokeNotFound"
 
 import { mapGetters } from "vuex"
 
+import { computeOffsetPage } from "../utilities/utilities"
+
 export default {
     components: {
         skeletonList: SkeletonList,
@@ -68,27 +69,47 @@ export default {
 
     data() {
         return {
-            pageCount: 55,
+            pageSize: 20,
             page: 1,
         }
     },
 
     methods: {
+        computeOffsetPage,
+
         clickPage(pageNum) {
-            this.page = pageNum
+            console.log('pageNum: ', pageNum)
+            const offset = this.computeOffsetPage(pageNum, this.pageSize)
+            console.log('offset: ', offset)
+            console.log('limit: ', this.pageSize)
         }
+
     },
 
     computed: {
         ...mapGetters({
             isLoading : 'isLoadingData',
-            hasNoData: 'hasNoData'
-        })
+            hasNoData: 'hasNoData',
+            nextPage: 'nextPage',
+            prevPage: 'prevPage',
+        }),
+        pageCount() {  // DO not to use ARROW function in computed or you will not be able to use "this" keyword
+            const TotalNoOfPages = Math.ceil(this.$store.getters.totalCount / this.pageSize)
+            console.log('total pages: ', TotalNoOfPages)
+
+            return TotalNoOfPages
+        }
     },
 
     watch: {
         page(value) {
             console.log("current page: ", this.page)
+        },
+        prevPage() {
+            console.log("prevPage changed: ", this.prevPage)
+        },
+        nextPage() {
+            console.log("nextPage changed: ", this.nextPage)
         }
     }
 }
